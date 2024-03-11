@@ -55,7 +55,7 @@ class TimeoutCalculator:
 
     @staticmethod
     def __compute_timeout(mean: float, stddiv: float, k: float, bounds: TimeoutBounds) -> float:
-        # TODO: Use the mean and stddiv to compute the timeout. Then, if needed, trim to the min and max in self.bounds
+        # Use the mean and stddiv to compute the timeout. Then, if needed, trim to the min and max in self.bounds
         timeout = mean + k * stddiv
         if bounds.min != None and timeout < bounds.min:
             timeout = bounds.min
