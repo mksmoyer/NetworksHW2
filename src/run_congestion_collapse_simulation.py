@@ -22,7 +22,7 @@ def return_congested_simulator(host: Host, network_interface: NetworkInterface, 
         clock=clock,
         loss_ratio=0.0,
         queue_limit=1000000,
-        rtt_min=0,  # TODO: You're allowed to modify the RTT
+        rtt_min=10,  # TODO: You're allowed to modify the RTT
     )
 
 
@@ -47,7 +47,7 @@ def tick_and_get_seq_number(window):
 
 def get_window_sizes():
     # TODO: Select a progression of window sizes, which show a congestion collapse curve.
-    return [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+    return int[2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 
 def plot(window_sizes, sequence_numbers):
     throughput = list(map(lambda seq_num: seq_num / DURATION, sequence_numbers))
