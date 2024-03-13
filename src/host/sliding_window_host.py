@@ -31,9 +31,9 @@ class SlidingWindowHost(Host, ABC):
         #      AIMD.
         self.window_size = window_size
         self.next_up = 0
-        self.inflight: List[Packet] = []
-        self.acked: List[Packet] = []
-        self.buffer: List[Packet] = []
+        self.inflight = []
+        self.acked  = []
+        self.buffer = []
 
     def run_one_tick(self) -> int | None:
         current_time = self.clock.read_tick()
