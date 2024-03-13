@@ -64,6 +64,7 @@ class StopAndWaitHost(Host, ABC):
             self.network_interface.transmit(retransmission_packet)
             self.inflight.append(retransmission_packet)
 
+            
 
         # TODO: STEP 3 - Transmit new messages
         #  - When you transmit a packet (in steps 2 and 3), you should track that message as inflight
@@ -85,5 +86,5 @@ class StopAndWaitHost(Host, ABC):
         #      - That is, the sequence number such that it, and all sequence numbers before, have been ACKed
 
         # The last time we succesfully receive, next_up is moved to the next one being waited for, so next_up-1 is the last ack
-        return self.next_up
         
+        return (self.next_up - 1)
