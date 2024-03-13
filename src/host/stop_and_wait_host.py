@@ -30,6 +30,7 @@ class StopAndWaitHost(Host, ABC):
         self.next_up = 0
         self.inflight = []
         self.acked = []
+        self.timeout = self.timeout_calculator.timeout()
 
 
     def run_one_tick(self) -> int | None:
@@ -57,8 +58,8 @@ class StopAndWaitHost(Host, ABC):
         # if there are packets in flight, we see if the time since sending exceeds the current timeout at this tick
         # if the timeout is exceeded, we make a packet with retransmission flag True and the same sequence number to simulate retransmission
         # also need to clear inflight array of the old packet and add new one to inflight
-        timeout = self.timeout_calculator.timeout()
-        if self.inflight and (current_time - self.inflight[0].sent_timestamp) > timeout:
+        
+        if self.inflight and (current_time - self.inflight[0].sent_timestamp) > self.timeout:
             self.inflight.clear()
             retransmission_packet = Packet(sent_timestamp=current_time, sequence_number=self.next_up, retransmission_flag=True, ack_flag=False)
             self.network_interface.transmit(retransmission_packet)
