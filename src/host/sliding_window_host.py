@@ -53,11 +53,13 @@ class SlidingWindowHost(Host, ABC):
         for packet in packets_received:
             if packet.sequence_number == self.next_up:
                 self.acked.append(packet)
-                self.inflight.remove(packet)
+                if packet in self.inflight:
+                    self.inflight.remove(packet)
                 self.next_up += 1
             else:
                 self.buffer.append(packet)
-                self.inflight.remove(packet)
+                if packet in self.inflight:
+                    self.inflight.remove(packet)
 
 
 
