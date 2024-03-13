@@ -47,6 +47,7 @@ class StopAndWaitHost(Host, ABC):
         packets_received = self.network_interface.receive_all()
         if packets_received and packets_received[0].sequence_number == self.next_up:
             self.acked.append (packets_received[0])
+            self.inflight.clear()
             print ("acked")
             self.next_up += 1
 
