@@ -44,19 +44,24 @@ class TimeoutCalculator:
     @staticmethod
     def __compute_new_mean_estimate(old_mean: float, latest_rtt: float, alpha: float) -> float:
         # Implement this function to compute the new mean using an EWMA-based estimation algorithm
+        # EWMA mean algorithm from lecture notes is as follows
         new_mean = (1-alpha) * old_mean + alpha * latest_rtt
         return new_mean
 
     @staticmethod
     def __compute_new_stddiv_estimate(old_stddiv: float, mean: float, latest_rtt: float, beta: float) -> float:
         # Implement this function to compute the new stddiv using an EWMA-based estimation algorithm
+        # EWMA standard deviation algorithm from lecture notes is as follow
         new_stddiv = (1-beta) * old_stddiv + beta * abs(latest_rtt - mean)
         return new_stddiv
 
     @staticmethod
     def __compute_timeout(mean: float, stddiv: float, k: float, bounds: TimeoutBounds) -> float:
         # Use the mean and stddiv to compute the timeout. Then, if needed, trim to the min and max in self.bounds
+        # timeout algorithm 
         timeout = mean + k * stddiv
+
+        # if there are bounds and the timeout exceeds one of them, trim it
         if bounds.min != None and timeout < bounds.min:
             timeout = bounds.min
         elif bounds.max != None and timeout > bounds.max:
