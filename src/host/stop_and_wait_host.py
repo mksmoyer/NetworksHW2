@@ -34,7 +34,9 @@ class StopAndWaitHost(Host, ABC):
 
 
     def run_one_tick(self) -> int | None:
+
         current_time = self.clock.read_tick()
+        print(f"Tick: {current_time}, next_up: {self.next_up}, inflight: {self.inflight}, acked: {self.acked}")
         self.timeout = self.timeout_calculator.timeout()
 
         # TODO: STEP 1 - Process newly received messages
