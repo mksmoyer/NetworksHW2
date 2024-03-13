@@ -36,7 +36,7 @@ class StopAndWaitHost(Host, ABC):
     def run_one_tick(self) -> int | None:
 
         current_time = self.clock.read_tick()
-        print(f"Tick: {current_time}, next_up: {self.next_up}, inflight: {self.inflight}, acked: {self.acked}")
+        
         self.timeout = self.timeout_calculator.timeout()
 
         # TODO: STEP 1 - Process newly received messages
@@ -44,11 +44,11 @@ class StopAndWaitHost(Host, ABC):
         #  - You should mark these messages as successfully delivered.
 
         # mark delivered by adding to list of acked packets, then increase next_up
+        # we also need to clear the inflight list
         packets_received = self.network_interface.receive_all()
         if packets_received and packets_received[0].sequence_number == self.next_up:
             self.acked.append (packets_received[0])
             self.inflight.clear()
-            print ("acked")
             self.next_up += 1
 
         # TODO: STEP 2 - Retry any messages that have timed out
