@@ -47,7 +47,7 @@ def tick_and_get_seq_number(window):
 
 def get_window_sizes():
     # TODO: Select a progression of window sizes, which show a congestion collapse curve.
-    return int[2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+    return [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
 
 def plot(window_sizes, sequence_numbers):
     throughput = list(map(lambda seq_num: seq_num / DURATION, sequence_numbers))
