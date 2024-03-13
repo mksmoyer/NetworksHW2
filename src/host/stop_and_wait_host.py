@@ -30,11 +30,12 @@ class StopAndWaitHost(Host, ABC):
         self.next_up = 0
         self.inflight = []
         self.acked = []
-        self.timeout = self.timeout_calculator.timeout()
+        
 
 
     def run_one_tick(self) -> int | None:
         current_time = self.clock.read_tick()
+        self.timeout = self.timeout_calculator.timeout()
 
         # TODO: STEP 1 - Process newly received messages
         #  - These will all be acknowledgement to messages this host has previously sent out.
